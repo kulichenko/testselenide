@@ -13,11 +13,19 @@ public class TestYa {
     @Test
     public void openYa() {
         open("http://yandex.ru ");
-        $("input#text").setValue(searchingText);
-        $("div.search2__button").click();
-        if ($(".card__narrow").exists()) {
-            $$(".typo_text_l").shouldHave(size(13));
-        } else $$(".typo_text_l").shouldHave(size(11));
-        $(".typo_text_l").shouldHave(Condition.text(searchingText));
+        for (int i = 0; i < 10; i++) {//
+            if ($(".input__control").exists()) {
+                $(".input__control").setValue(searchingText);
+            } else
+                $("input#text").setValue(searchingText);
+            if ($(".websearch-button__text").exists()) {
+                $(".websearch-button__text").click();
+            } else
+                $("div.search2__button").click();
+            if ($(".card__narrow").exists()) {
+                $$(".typo_text_l").shouldHave(size(13));
+            } else $$(".typo_text_l").shouldHave(size(11));
+            $(".typo_text_l").shouldHave(Condition.text(searchingText));
+        }
     }
 }
