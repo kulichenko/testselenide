@@ -13,7 +13,8 @@ public class TestGoogleSearch {
         GoogleSearchPage searchPage = open("http://google.com", GoogleSearchPage.class);
         GoogleResultsPage resultsPage = searchPage.typeSearchText("Hello, world!");
         resultsPage.results().shouldHaveSize(9);
-        resultsPage.results().get(0).shouldHave(Condition.text("Hello, world"));
+        for (int i = 0; i<9; i++){
+        resultsPage.results().get(i).shouldHave(Condition.text("Hello"));}
     }
 }
 
