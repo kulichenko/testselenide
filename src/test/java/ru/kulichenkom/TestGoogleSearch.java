@@ -5,6 +5,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+
 import static com.codeborne.selenide.Selenide.*;
 
 public class TestGoogleSearch {
@@ -13,8 +14,10 @@ public class TestGoogleSearch {
         GoogleSearchPage searchPage = open("http://google.com", GoogleSearchPage.class);
         GoogleResultsPage resultsPage = searchPage.typeSearchText("Hello, world!");
         resultsPage.results().shouldHaveSize(9);
-        for (int i = 0; i<9; i++){
-        resultsPage.results().get(i).shouldHave(Condition.text("Hello"));}
+//        for (int i = 0; i < 9; i++) {
+//            resultsPage.results().get(i).shouldHave(Condition.text("Hello"));
+//        }
+        resultsPage.results().forEach(element -> element.shouldHave(Condition.text("Hello")));
     }
 }
 
