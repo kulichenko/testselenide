@@ -34,19 +34,19 @@ class NameInputPage {
         return page(NameInputPage.class);
     }
 
-    public countryAndBirthday submitFillNamePage() {
+    public СountryAndBirthday submitFillNamePage() {
         $("#iSignupAction").click();
-        return page(countryAndBirthday.class);
+        return page(СountryAndBirthday.class);
     }
 }
 
-class countryAndBirthday {
-    public countryAndBirthday fillCountryAndBirthday(String country, String day, String month, String year) {
+class СountryAndBirthday {
+    public СountryAndBirthday fillCountryAndBirthday(String country, String day, String month, String year) {
         $("#Country").selectOption(country);
         $("#BirthDay").selectOption(day);
         $("#BirthMonth").selectOption(month);
         $("#BirthYear").selectOption(year);
-        return page(countryAndBirthday.class);
+        return page(СountryAndBirthday.class);
     }
 
     public void submitCountryAndBirthdayPage() {
