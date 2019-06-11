@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.page;
 
-
 public class RegistrationPage {
 
     @FindBy(css = "tr:nth-child(1) > td > input")
@@ -26,7 +25,6 @@ public class RegistrationPage {
     private SelenideElement flagAgreePolitic;
     @FindBy(css = "#submit_reg")
     private SelenideElement submitButton;
-
 
     public RegistrationPage fillRegisterFields(CharSequence userName, CharSequence userPass,
                                                CharSequence firstName, CharSequence lastName, CharSequence phoneNumber,
@@ -66,10 +64,9 @@ class TestMotoScuterRegistration {
     @Test
     public void testRegistration() {
         open("https://www.moto-scuter.ru/reg/", RegistrationPage.class)
-                .fillRegisterFields("sfdahdfsdtadfrdjhs", "fasbddftasfhfvwuJH312",
-                        "sfdddgdffthsd", "sdfdhdftdfgdfffaaw", "9834188954",
-                        "sdsddgeasdfaffdsahgb@dflkjg.com")
-                .submitRegistration()
-                .checkRegisteredName("sfdddgdffthsd sdfdhdftdfgdfffaaw");
+                .fillRegisterFields("sfdahadfrdjhs", "fasbddftasfhfvwuJH312",
+                        "gdffthsd", "sfgdfffaaw", "9234188954",
+                        "ssqwgb@dflkjg.com").submitRegistration()
+                .checkRegisteredName("gdffthsd sfgdfffaaw");
     }
 }
