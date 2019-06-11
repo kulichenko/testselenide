@@ -1,53 +1,75 @@
 package ru.kulichenkom.findby;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.page;
 
 
 public class RegistrationPage {
-    private WebDriver driver;
+
     @FindBy(css = "tr:nth-child(1) > td > input")
-    private WebElement login;
+    private SelenideElement login;
     @FindBy(css = "tr:nth-child(2) > td > input")
-    private WebElement password;
+    private SelenideElement password;
     @FindBy(css = "tr:nth-child(3) > td > input")
-    private WebElement realName;
+    private SelenideElement realName;
     @FindBy(css = "#phone3")
-    private WebElement phoneNo;
+    private SelenideElement phoneNo;
     @FindBy(css = "tr:nth-child(5) input")
-    private WebElement email;
+    private SelenideElement email;
     @FindBy(css = ".politika")
-    private WebElement flagAgreePolitic;
+    private SelenideElement flagAgreePolitic;
     @FindBy(css = "#submit_reg")
-    private WebElement submitButton;
+    private SelenideElement submitButton;
 
-    public RegistrationPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-    }
 
-    public void fillRegisterFields(CharSequence userName, CharSequence userPass,
-                                   CharSequence firstName, CharSequence lastName, CharSequence phoneNumber,
-                                   CharSequence emailAdress) {
+    public RegistrationPage fillRegisterFields(CharSequence userName, CharSequence userPass,
+                                               CharSequence firstName, CharSequence lastName, CharSequence phoneNumber,
+                                               CharSequence emailAdress) {
         login.sendKeys(userName);
         password.sendKeys(userPass);
         realName.sendKeys(firstName + " " + lastName);
         phoneNo.sendKeys(phoneNumber);
         email.sendKeys(emailAdress);
+        return this;
     }
-//}
 
-    //class TestMotoScuterRegistration {
+    public ProfilePage submitRegistration() {
+        flagAgreePolitic.click();
+        submitButton.click();
+        return page(ProfilePage.class);
+    }
+}
+
+class ProfilePage {
+    @FindBy(css = ".succes > b")
+    private SelenideElement success;
+    @FindBy(css = "a:nth-child(1) > span")
+    private SelenideElement returnToMainPage;
+    @FindBy(css = "#namefio")
+    private SelenideElement nameFIO;
+
+    public void checkRegisteredName(String nameForChecking) {
+        success.shouldHave(Condition.text("Вы успешно зарегистрированы"));
+        returnToMainPage.click();
+        String expectedValue = nameFIO.getText();
+        Assertions.assertEquals(nameForChecking, expectedValue);
+    }
+}
+
+class TestMotoScuterRegistration {
     @Test
     public void testRegistration() {
-
-        driver.get("https://www.moto-scuter.ru/reg/");
-        RegistrationPage registrationPage = new RegistrationPage(driver);
-        registrationPage.fillRegisterFields("sfdahdfsdjhs", "fasbdhfvwuJH312",
-                "sfdhsd", "sdfdhffaaw", "6615478545",
-                "sdsdsahgb@dflkjg.com");
+        open("https://www.moto-scuter.ru/reg/", RegistrationPage.class)
+                .fillRegisterFields("sfdahdfsdtadfrdjhs", "fasbddftasfhfvwuJH312",
+                        "sfdddgdffthsd", "sdfdhdftdfgdfffaaw", "9834188954",
+                        "sdsddgeasdfaffdsahgb@dflkjg.com")
+                .submitRegistration()
+                .checkRegisteredName("sfdddgdffthsd sdfdhdftdfgdfffaaw");
     }
 }
