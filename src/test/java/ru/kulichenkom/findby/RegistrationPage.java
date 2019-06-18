@@ -26,9 +26,9 @@ public class RegistrationPage {
     @FindBy(css = "#submit_reg")
     private SelenideElement submitButton;
 
-    public RegistrationPage fillRegisterFields(CharSequence userName, CharSequence userPass,
-                                               CharSequence firstName, CharSequence lastName, CharSequence phoneNumber,
-                                               CharSequence emailAdress) {
+    public RegistrationPage fillRegisterFields(String userName, String userPass,
+                                               String firstName, String lastName, String phoneNumber,
+                                               String emailAdress) {
         login.sendKeys(userName);
         password.sendKeys(userPass);
         realName.sendKeys(firstName + " " + lastName);
@@ -64,9 +64,9 @@ class TestMotoScuterRegistration {
     @Test
     public void testRegistration() {
         open("https://www.moto-scuter.ru/reg/", RegistrationPage.class)
-                .fillRegisterFields("sfdahadfrdjhs", "fasbddftasfhfvwuJH312",
-                        "gdffthsd", "sfgdfffaaw", "9234188954",
+                .fillRegisterFields("ssdfhadfrdjhs", "fasbddftasfhfvwuJH312",
+                        "gdfftsdfhsd", "sfgdfsdfffaaw", "9234188954",
                         "ssqwgb@dflkjg.com").submitRegistration()
-                .checkRegisteredName("gdffthsd sfgdfffaaw");
+                .checkRegisteredName("gdfftsdfhsd sfgdfsdfffaaw");
     }
 }
