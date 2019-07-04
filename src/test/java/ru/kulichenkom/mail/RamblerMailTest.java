@@ -7,43 +7,36 @@ import java.util.Properties;
 public class RamblerMailTest {
     static final String ENCODING = "UTF-8";
 
-    public static void receiveMessage(String user, String password, String pop3Host)
+    public static void receiveMessage(String host, int portNum, String user, String password)
             throws MessagingException, IOException {
-        Authenticator authenticator = new Passport(user, password);
+        Authenticator authenticator = new OurAuthenticator(user, password);
         Properties properties = System.getProperties();
         properties.put("mail.user", user);
-        properties.put("mail.host", pop3Host);
-//        properties.put("mail.port", pop3Port);
-        properties.put("mail.debug", "false");
-        properties.put("mail.store.protocol", "pop3");
-        properties.put("mail.transport.protocol", "smtp");
-
+        properties.put("mail.host", host);
+        properties.put("mail.pop3.port", portNum);
         Session session = Session.getDefaultInstance(properties, authenticator);
-        Store store = session.getStore();
+        Store store = session.getStore("pop3");
         store.connect();
-        Folder inbox = store.getFolder("INBOX");
-        inbox.open(Folder.READ_WRITE);
+//        Folder inbox = store.getFolder("INBOX");
+//        inbox.open(Folder.READ_WRITE);
 
     }
 
     public static void main(String[] args)
             throws MessagingException, IOException {
-        String smtpHost = "smtp.rambler.ru";
-        String smtpPort = "465";
-        String pop3Host = "pop.rambler.ru";
-        String pop3Port = "995";
-        String address = "coolich@lenta.ru";
-        String login = "coolich";
+
+        String host = "pop.rambler.ru";
+        String user = "coolich";
         String password = "8kusZE6h8squWjm";
-        receiveMessage(login, password, pop3Host);
+        int portNum = 995;
+        receiveMessage(host, portNum, user, password);
     }
 }
 
-class Passport extends Authenticator {
-    String user;
-    String password;
+class OurAuthenticator extends Authenticator {
+    String user, password;
 
-    public Passport(String user, String password) {
+    public OurAuthenticator(String user, String password) {
         this.user = user;
         this.password = password;
     }
