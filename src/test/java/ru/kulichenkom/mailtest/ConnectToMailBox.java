@@ -17,7 +17,6 @@ public class ConnectToMailBox {
         properties.put("mail.pop3.port", port);
         properties.put("mail.pop3.ssl.enable", "true");
         properties.put("mail.store.protocol", "pop3");
-        properties.put("mail.mime.charset", ENCODING);
         Authenticator auth = new MyAuthenticator(user, password);
         Session session = Session.getInstance(properties, auth);
         Store store = session.getStore();
