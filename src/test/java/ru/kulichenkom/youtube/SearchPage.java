@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 class SearchPage {
+    public static final String URL = "https://www.youtube.com/";
     private SelenideElement inputSearch = $("input#search");
     private SelenideElement searchButton = $("button#search-icon-legacy");
     private SelenideElement loginButton = $("div#buttons yt-formatted-string#text");
@@ -16,14 +17,12 @@ class SearchPage {
     private SelenideElement nextButton = $("#passwordNext");
 
     public SearchPage login(String user, String pass) {
-        if (user != null || pass != null) {
             loginButton.click();
             userName.setValue(user);
             goToPasswordButton.click();
             nextButton.waitUntil(visible, 3000);
             password.setValue(pass);
             nextButton.click();
-        }
         return this;
     }
 
@@ -42,6 +41,5 @@ class ResultPage {
         toggleButton.waitUntil(appear, 5000); //waiting for toggle button appearance
         Assertions.assertNotNull(contents);
         Assertions.assertTrue(contents.toString().contains(searchQuery));
-        Selenide.close();
     }
 }

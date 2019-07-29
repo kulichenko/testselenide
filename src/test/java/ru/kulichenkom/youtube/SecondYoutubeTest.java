@@ -2,12 +2,21 @@ package ru.kulichenkom.youtube;
 
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
 
-public class YoutubeTest {
+public class SecondYoutubeTest {
+
+    private SearchPage searchPage;
+
+    @BeforeEach
+    public void setUp() {
+        searchPage = open(SearchPage.URL, SearchPage.class);
+    }
+
     @CsvSource({
             "Paw patrol, Paw patrol",
             "Paw patrol, Paw bone"
@@ -15,8 +24,7 @@ public class YoutubeTest {
 
     @ParameterizedTest
     public void testSearchVideoWithoutLogin(String searchingText, String expectedText) {
-        open("https://www.youtube.com/", SearchPage.class)
-                .searchVideo(searchingText)
+        searchPage.searchVideo(searchingText)
                 .checkingResults(expectedText);
     }
 
@@ -27,8 +35,7 @@ public class YoutubeTest {
 
     @ParameterizedTest
     public void testSearchVideoWithLogin(String searchingText, String expectedText, String userName, String password) {
-        open("https://www.youtube.com/", SearchPage.class)
-                .login(userName, password)
+        searchPage.login(userName, password)
                 .searchVideo(searchingText)
                 .checkingResults(expectedText);
     }
