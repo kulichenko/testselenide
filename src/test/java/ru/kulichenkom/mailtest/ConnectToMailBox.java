@@ -5,11 +5,21 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ConnectToMailBox {
-    static final String ENCODING = "UTF-8";
+
     private String host = "pop.rambler.ru";
     private String port = "995";
     private String user = "coolich@lenta.ru";
     private String password = "Aaabbb15";
+
+    public ConnectToMailBox() {
+    }
+
+    public ConnectToMailBox(String host, String port, String user, String password) {
+        this.host = host;
+        this.port = port;
+        this.user = user;
+        this.password = password;
+    }
 
     public Store getConnection() throws MessagingException, IOException {
         Properties properties = System.getProperties();

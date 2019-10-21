@@ -7,10 +7,9 @@ import java.io.IOException;
 
 public class MailTest {
 
-    public static void main(String[] args) throws MessagingException, IOException {
-        ConnectToMailBox connectToMailBox = new ConnectToMailBox();
+    public static void connectingAndReadContent(ConnectToMailBox connectToMailBox) throws MessagingException, IOException {
         Folder inbox = connectToMailBox.getConnection().getFolder("INBOX");
-        inbox.open(Folder.READ_ONLY);
+        inbox.open(Folder.READ_WRITE);
         System.out.println("Количество сообщений: " + String.valueOf(inbox.getMessageCount()));
         Message message[] = inbox.getMessages();
         for (int i = 0; i < message.length; i++) {
@@ -19,4 +18,18 @@ public class MailTest {
             System.out.println(content);
         }
     }
+
+    public static void main(String[] args) throws MessagingException, IOException {
+
+        if (args.length != 0) {
+            System.out.println("Подключение с параметрами из командной строки");
+            ConnectToMailBox connectToMailBox = new ConnectToMailBox(args[0], args[1], args[2], args[3]);
+            connectingAndReadContent(connectToMailBox);
+        } else {
+            System.out.println("Подключение без параметров из командной строки");
+            ConnectToMailBox connectToMailBox = new ConnectToMailBox();
+            connectingAndReadContent(connectToMailBox);
+        }
+    }
 }
+
