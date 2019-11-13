@@ -1,5 +1,7 @@
 package ru.kulichenkom.yandex;
 
+import com.codeborne.selenide.Selenide;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,11 +17,25 @@ public class OpenStartPage {
     }
 
     @CsvSource({
-            "nissan"
+            "Примитивные типы"
     })
 
     @ParameterizedTest
-    public void testSearchWithoutLogin(String searchingText) {
-        startPage.searchQuery(searchingText);
+    public void testSearchWithoutLoginMouseInitiate(String searchingText) {
+        startPage.searchQueryMouseInitiate(searchingText);
+    }
+
+    @CsvSource({
+            "Примитивные типы"
+    })
+
+    @ParameterizedTest
+    public void testSearchWithoutLoginPressEnter(String searchingText) {
+        startPage.searchQueryMouseInitiate(searchingText);
+    }
+
+    @AfterEach
+    void closeBrowser() {
+        Selenide.close();
     }
 }
